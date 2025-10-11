@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using System.Speech.Synthesis;
+using NAudio.Gui;
 using NAudio.Wave;
 
 namespace TTSGameOverlay
@@ -33,6 +34,8 @@ namespace TTSGameOverlay
         private Button? exitButton;
         private ListBox? voiceListBox;
         private Label? voiceLabel;
+        private Label? volumeLabel;
+        private TrackBar? volumeSlider;
 
         // For dragging the window
         private bool isDragging = false;
@@ -42,7 +45,7 @@ namespace TTSGameOverlay
         // Settings panel state
         private bool isSettingsExpanded = false;
         private readonly int collapsedHeight = 50;
-        private readonly int expandedHeight = 140;
+        private readonly int expandedHeight = 240;
 
         public TtsOverlayForm()
         {
@@ -107,7 +110,7 @@ namespace TTSGameOverlay
             settingsPanel = new Panel
             {
                 Location = new Point(10, 50),
-                Size = new Size(330, 80),
+                Size = new Size(330, 180),
                 BackColor = Color.FromArgb(50, 50, 50),
                 Visible = false
             };
@@ -123,11 +126,11 @@ namespace TTSGameOverlay
                 BackColor = Color.Transparent
             };
 
-            // Voice selection list box (replaces ComboBox) - moved below the label
+            // Voice selection list box - now full width with margins
             voiceListBox = new ListBox
             {
                 Location = new Point(5, 28),
-                Size = new Size(250, 45),
+                Size = new Size(320, 45), // Full width minus margins (330 - 10 = 320)
                 BackColor = Color.FromArgb(50, 50, 50),
                 ForeColor = Color.White,
                 Font = new Font("Segoe UI", 12),
@@ -139,26 +142,51 @@ namespace TTSGameOverlay
             voiceListBox.DrawItem += VoiceListBox_DrawItem;
             voiceListBox.SelectedIndexChanged += VoiceListBox_SelectedIndexChanged;
 
-            // Exit button (styled as X)
+            // Volume label
+            volumeLabel = new Label
+            {
+                Location = new Point(5, 85),
+                Size = new Size(70, 20),
+                Text = "Volume",
+                ForeColor = Color.White,
+                Font = new Font("Segoe UI", 12, FontStyle.Bold),
+                BackColor = Color.Transparent
+            };
+
+            // Volume slider - now full width with margins
+            volumeSlider = new TrackBar
+            {
+                Location = new Point(5, 108),
+                Size = new Size(320, 30), // Full width minus margins (330 - 10 = 320)
+                Minimum = 0,
+                Maximum = 100,
+                Value = 100,
+                TickStyle = TickStyle.None,
+                BackColor = Color.FromArgb(50, 50, 50)
+            };
+            volumeSlider.ValueChanged += VolumeSlider_ValueChanged;
+
+            // Exit button (centered horizontally in settings panel)
             exitButton = new Button
             {
-                Location = new Point(290, 26),
-                Size = new Size(28, 28),
+                Location = new Point(125, 145), // Centered: (330 - 80) / 2 = 125
+                Size = new Size(80, 30),
                 FlatStyle = FlatStyle.Flat,
                 BackColor = Color.FromArgb(60, 60, 60),
                 ForeColor = Color.White,
-                Text = "",
-                Font = new Font("Segoe UI", 13),
+                Text = "Exit",
+                Font = new Font("Segoe UI", 11),
                 Cursor = Cursors.Hand,
                 UseCompatibleTextRendering = false
             };
             exitButton.FlatAppearance.BorderSize = 0;
             exitButton.Click += ExitButton_Click;
-            exitButton.Paint += ExitButton_Paint;
 
             // Add controls to settings panel
             settingsPanel.Controls.Add(voiceLabel);
             settingsPanel.Controls.Add(voiceListBox);
+            settingsPanel.Controls.Add(volumeLabel);
+            settingsPanel.Controls.Add(volumeSlider);
             settingsPanel.Controls.Add(exitButton);
 
             // Add all controls to form
@@ -328,6 +356,21 @@ namespace TTSGameOverlay
             }
         }
 
+        private void VolumeSlider_ValueChanged(object? sender, EventArgs e)
+        {
+            if (synthesizer != null && volumeSlider != null)
+            {
+                try
+                {
+                    synthesizer.Volume = volumeSlider.Value;
+                }
+                catch (Exception)
+                {
+                    // Handle volume change errors silently
+                }
+            }
+        }
+
         // Update the VoiceListBox_DrawItem method to left-align the text:
         private void VoiceListBox_DrawItem(object? sender, DrawItemEventArgs e)
         {
@@ -471,27 +514,6 @@ namespace TTSGameOverlay
                 SetupAlwaysOnTop();
             }
             base.WndProc(ref m);
-        }
-
-        private void ExitButton_Paint(object? sender, PaintEventArgs e)
-        {
-            if (sender is Button button)
-            {
-                // Clear the button
-                e.Graphics.Clear(button.BackColor);
-
-                // Draw the X manually centered
-                using var brush = new SolidBrush(button.ForeColor);
-                using var font = new Font("Segoe UI", 13);
-
-                string text = "X";
-                var textSize = e.Graphics.MeasureString(text, font);
-
-                float x = (button.Width - textSize.Width) / 2;
-                float y = (button.Height - textSize.Height) / 2;
-
-                e.Graphics.DrawString(text, font, brush, x, y);
-            }
         }
 
         private void DropdownButton_Paint(object? sender, PaintEventArgs e)
