@@ -14,6 +14,25 @@ namespace TTSGameOverlay
         [DllImport("user32.dll")]
         private static extern bool SetWindowDisplayAffinity(IntPtr hWnd, uint dwAffinity);
 
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern bool RegisterHotKey(IntPtr hWnd, int id, uint fsModifiers, uint vk);
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern bool UnregisterHotKey(IntPtr hWnd, int id);
+
+        [DllImport("user32.dll")]
+        private static extern bool SetForegroundWindow(IntPtr hWnd);
+
+        [DllImport("user32.dll")]
+        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
+
+        private const int WM_HOTKEY = 0x0312;
+        private const int SW_RESTORE = 9;
+
+        private const uint MOD_CONTROL = 0x0002;
+        private const int HOTKEY_ID_FOCUS = 0x1001;
+        private const uint VK_RETURN = 0x0D;
+
         // Constants for SetWindowPos
         private static readonly IntPtr HWND_TOPMOST = new(-1);
         private const uint SWP_NOMOVE = 0x0002;
@@ -44,7 +63,7 @@ namespace TTSGameOverlay
         // Settings panel state
         private bool isSettingsExpanded = false;
         private readonly int collapsedHeight = 50;
-        private readonly int expandedHeight = 240;
+        private readonly int expandedHeight = 270; // increased to prevent cut-off
 
         public TtsOverlayForm()
         {
@@ -106,10 +125,11 @@ namespace TTSGameOverlay
             dropdownButton.Paint += DropdownButton_Paint;
 
             // Create settings panel (initially hidden)
+            // increased height slightly to fit larger ListBox + controls
             settingsPanel = new Panel
             {
                 Location = new Point(10, 50),
-                Size = new Size(330, 180),
+                Size = new Size(330, 210), // increased to match expandedHeight comfortably
                 BackColor = Color.FromArgb(50, 50, 50),
                 Visible = false
             };
@@ -125,24 +145,25 @@ namespace TTSGameOverlay
                 BackColor = Color.Transparent
             };
 
+            // Make ListBox tall enough to show 3 items at ItemHeight = 28
             voiceListBox = new ListBox
             {
                 Location = new Point(5, 28),
-                Size = new Size(320, 45),
+                Size = new Size(320, 84), // 3 * 28 = 84
                 BackColor = Color.FromArgb(50, 50, 50),
                 ForeColor = Color.White,
                 Font = new Font("Segoe UI", 12),
                 BorderStyle = BorderStyle.None,
                 SelectionMode = SelectionMode.One,
                 DrawMode = DrawMode.OwnerDrawFixed,
-                ItemHeight = 22
+                ItemHeight = 28
             };
             voiceListBox.DrawItem += VoiceListBox_DrawItem;
             voiceListBox.SelectedIndexChanged += VoiceListBox_SelectedIndexChanged;
 
             volumeLabel = new Label
             {
-                Location = new Point(5, 85),
+                Location = new Point(5, 116), // placed under the taller list box
                 Size = new Size(70, 20),
                 Text = "Volume",
                 ForeColor = Color.White,
@@ -152,7 +173,7 @@ namespace TTSGameOverlay
 
             volumeSlider = new TrackBar
             {
-                Location = new Point(5, 108),
+                Location = new Point(5, 136), // below the volume label
                 Size = new Size(320, 30),
                 Minimum = 0,
                 Maximum = 100,
@@ -162,10 +183,13 @@ namespace TTSGameOverlay
             };
             volumeSlider.ValueChanged += VolumeSlider_ValueChanged;
 
+            // Centered exit button with adequate spacing and larger size so text fits
+            int exitBtnWidth = 100;
+            int panelWidth = 330;
             exitButton = new Button
             {
-                Location = new Point(125, 145),
-                Size = new Size(80, 30),
+                Location = new Point((panelWidth - exitBtnWidth) / 2, 176), // centered horizontally within panel
+                Size = new Size(exitBtnWidth, 30), // wider and taller so "Exit" displays comfortably
                 FlatStyle = FlatStyle.Flat,
                 BackColor = Color.FromArgb(60, 60, 60),
                 ForeColor = Color.White,
@@ -307,22 +331,56 @@ namespace TTSGameOverlay
 
         protected override void WndProc(ref Message m)
         {
-            // Handle minimize/restore to maintain always-on-top
+            if (m.Msg == WM_HOTKEY && (int)m.WParam == HOTKEY_ID_FOCUS)
+            {
+                try
+                {
+                    // restore if minimized, bring to front and set input focus
+                    ShowWindow(this.Handle, SW_RESTORE);
+                    SetForegroundWindow(this.Handle);
+                    this.Activate();
+                }
+                catch
+                {
+                    // swallow errors
+                }
+                return;
+            }
+
+            // existing handling: keep always-on-top after system menu actions
             if (m.Msg == 0x0112 && this.WindowState == FormWindowState.Normal) // WM_SYSCOMMAND
             {
                 SetupAlwaysOnTop();
             }
+
             base.WndProc(ref m);
         }
 
         protected override void OnFormClosing(FormClosingEventArgs e)
         {
+            try { UnregisterHotKey(this.Handle, HOTKEY_ID_FOCUS); } catch { }
+
             waveOut?.Stop();
             waveOut?.Dispose();
             waveOutVBCable?.Stop();
             waveOutVBCable?.Dispose();
             synthesizer?.Dispose();
             base.OnFormClosing(e);
+        }
+
+        protected override void OnHandleCreated(EventArgs e)
+        {
+            base.OnHandleCreated(e);
+
+            // Register Ctrl + Enter as system-wide hotkey
+            try
+            {
+                RegisterHotKey(this.Handle, HOTKEY_ID_FOCUS, MOD_CONTROL, VK_RETURN);
+            }
+            catch
+            {
+                // ignore registration failure in minimal UI
+            }
         }
     }
 }
