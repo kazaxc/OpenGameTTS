@@ -3,6 +3,14 @@
     <img src="/TTSGameOverlay/favicon.ico" alt="Logo" width="128" height="128">
 </div>
 
+<h3 align="center">Open Game TTS Overlay</h3>
+<p align="center">
+    Generate TTS for use in voice proximity games, Discord, etc.
+    <br/>
+    <a href="https://github.com/kazaxc/OpenGameTTS/releases"><strong>Download Here</strong></a>
+</p>
+
+
 # Open Game TTS Overlay
 
 <div align="center">
