@@ -37,16 +37,18 @@ Early stages work in progess but it is fully functional, the code is just not ve
 You must download [VB-Audio Virtual Cable](https://vb-audio.com/Cable/) as this is how speech is transmitted to your desired outputs.
 
 ### Installation
-1. Download the latest release [here](https://github.com/kazaxc/OpenGameTTS/releases).
+1. Download the latest [latest release](https://github.com/kazaxc/OpenGameTTS/releases).
 
-2. Set VB-Audio Virtual Cable as your input device on desired applications
+2. Set VB-Audio Virtual Cable as your input device on desired applications.
 
 3. Run the executable and start typing, its that easy.
 
 ### Hotkeys
-Focus on overlay and begin typing: CTRL + ENTER
+Focus on overlay:
+```CTRL + ENTER```
 
-Exit: ESC
+Exit:
+```ESC```
 
 ## Coming Soon
 A major refactor of the project is currently underway to move away from Win Forms as this was only to get an initial working build over to [Avalonia UI](https://avaloniaui.net/). In the process of this change more features will be added such as persitant settings changes, hotkey rebinding and much more.
