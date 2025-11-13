@@ -1,3 +1,8 @@
+<br/>
+<div align="center">
+    <img src="/TTSGameOverlay/favicon.ico" alt="Logo" width="128" height="128">
+</div>
+
 # Open Game TTS Overlay
 
 <div align="center">
