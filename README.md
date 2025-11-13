@@ -51,4 +51,4 @@ Exit:
     ```ESC```
 
 ## Coming Soon
-A major refactor of the project is currently underway to move away from Win Forms as this was only to get an initial working build over to [Avalonia UI](https://avaloniaui.net/). In the process of this change more features will be added such as persitant settings changes, hotkey rebinding and much more.
+A major refactor of the project is currently underway to move away from Win Forms as this was only to get an initial working build over to [Avalonia](https://avaloniaui.net/). In the process of this change more features will be added such as persitant settings changes, hotkey rebinding and much more.
