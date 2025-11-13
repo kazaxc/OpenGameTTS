@@ -44,10 +44,10 @@ You must download [VB-Audio Virtual Cable](https://vb-audio.com/Cable/) as this 
 3. Run the executable and start typing, its that easy.
 
 ### Hotkeys
-Focus on overlay:
+    Focus on overlay:
 ```CTRL + ENTER```
 
-Exit:
+    Exit:
 ```ESC```
 
 ## Coming Soon
