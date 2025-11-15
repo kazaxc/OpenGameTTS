@@ -1,6 +1,6 @@
 <br/>
 <div align="center">
-    <img src="/TTSGameOverlay/logo.svg" alt="Logo" width="128" height="128">
+    <img src="logo.svg" alt="Logo" width="128" height="128">
 </div>
 
 <h3 align="center">Open Game TTS Overlay</h3>
