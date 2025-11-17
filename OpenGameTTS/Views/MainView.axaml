@@ -12,5 +12,26 @@
     <vm:MainViewModel />
   </Design.DataContext>
 
-  <TextBlock Text="{Binding Greeting}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+  <!-- Application Layout -->
+  <Border Padding ="10">
+      <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, *">
+
+      <!-- Text input and settings menu button -->
+      <TextBox Grid.Column="0" Grid.Row="0"/>
+      <Button Grid.Column="1" Grid.Row="0"/>
+      <!-- Settings -->
+      <StackPanel Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch">
+          <!-- Voice Selection -->
+          <Label/>
+          <ListBox/>
+
+          <!-- Volume Slider -->
+          <Label/>
+          <Slider/>
+
+          <!-- Exit Button -->
+          <Button/>
+      </StackPanel>
+    </Grid>
+  </Border>
 </UserControl>

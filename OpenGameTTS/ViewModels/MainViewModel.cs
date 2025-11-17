@@ -1,6 +1,14 @@
-﻿namespace OpenGameTTS.ViewModels;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+
+namespace OpenGameTTS.ViewModels;
 
 public partial class MainViewModel : ViewModelBase
 {
-    public string Greeting => "Welcome to Avalonia!";
+    [ObservableProperty]
+    private int _windowWidth = 350;
+
+    [ObservableProperty]
+    private int _windowHeight = 50;
+
+    public static string Greeting => "Welcome to Avalonia!";
 }
