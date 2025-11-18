@@ -17,20 +17,23 @@
       <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, *">
 
       <!-- Text input and settings menu button -->
-      <TextBox Grid.Column="0" Grid.Row="0"/>
-      <Button Grid.Column="1" Grid.Row="0"/>
+      <TextBox Grid.Column="0" Grid.Row="0" Name="SpeechInputTextBox" Watermark="Enter your message..." Margin="0,0,10,0" HorizontalAlignment="Stretch"/>
+      <Button Grid.Column="1" Grid.Row="0" FontSize="20" Content="V"/>
       <!-- Settings -->
-      <StackPanel Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Stretch">
+      <StackPanel Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Stretch" Margin="0,10,0,0">
+          <!-- Header -->
+          <Label Content="Settings" FontWeight="Bold" FontSize="20"/>
+          
           <!-- Voice Selection -->
-          <Label/>
-          <ListBox/>
+          <Label Content="Voice" FontWeight="SemiBold" FontSize="16"/>
+          <ListBox SelectionMode="Single,AlwaysSelected" FontSize="14" Height="115"/>
 
           <!-- Volume Slider -->
-          <Label/>
-          <Slider/>
+          <Label Content="Volume" FontWeight="SemiBold" FontSize="16"/>
+          <Slider Minimum="0" Maximum="100" Value="100" />
 
           <!-- Exit Button -->
-          <Button/>
+          <Button Content="QUIT" HorizontalAlignment="Center"/>
       </StackPanel>
     </Grid>
   </Border>

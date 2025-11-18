@@ -8,7 +8,7 @@ public partial class MainViewModel : ViewModelBase
     private int _windowWidth = 350;
 
     [ObservableProperty]
-    private int _windowHeight = 50;
+    private int _windowHeight = 350;
 
     public static string Greeting => "Welcome to Avalonia!";
 }
