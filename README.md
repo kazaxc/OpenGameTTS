@@ -3,7 +3,7 @@
     <img src="/TTSGameOverlay/logo.svg" alt="Logo" width="128" height="128">
 </div>
 
-<h3 align="center">Open Game TTS Overlay</h3>
+<h3 align="center">Open Game TTS</h3>
 <p align="center">
     Generate TTS for use in voice proximity games, Discord, etc.
     <br/>
@@ -13,7 +13,7 @@
 
 ## About
 
-Open Game TTS Overlay is an overlay that you run on your games that allows you to input text that you wish to be TTS, the output is played back to you and pushed through [VB-Audio Virtual Cable](https://vb-audio.com/Cable/) for the ability to talk through programs such as discord or used in games with voice proximity. The project is heavily inspired by Sea Of Thieves and R.E.P.O. which include a native TTS feature for their in-game chats, the idea is to make proximity chat games more accessible to those who do not use a microphone. 
+Open Game TTS is an overlay that you run on your games that allows you to input text that you wish to be TTS, the output is played back to you and pushed through [VB-Audio Virtual Cable](https://vb-audio.com/Cable/) for the ability to talk through programs such as discord or used in games with voice proximity. The project is heavily inspired by Sea Of Thieves and R.E.P.O. which include a native TTS feature for their in-game chats, the idea is to make proximity chat games more accessible to those who do not use a microphone. 
 
 <div align="center">
     <img src="CurrentAppDesign.png" alt="Current application design">
@@ -21,7 +21,7 @@ Open Game TTS Overlay is an overlay that you run on your games that allows you t
 
 Uses Microsoft speech synthesis - Any language packs or SAPI5 voices you have installed on windows are available for you to use. If you want additional voices follow [this](https://support.microsoft.com/en-gb/topic/download-languages-and-voices-for-immersive-reader-read-mode-and-read-aloud-4c83a8d8-7486-42f7-8e46-2b0fdf753130) guide by Microsoft.
 
-Early stages work in progess but it is fully functional, the code is just not very clean and the project layout needs some work along with a few extra features. Major refactor coming soon.
+Early stages work in progess but it is fully functional, the code is just not very clean and the project layout needs some work along with a few extra features. Major [refactor](https://github.com/kazaxc/OpenGameTTS/tree/avalonia-refactor) currently underway, check [here](https://github.com/kazaxc/OpenGameTTS/milestones) for progress updates.
 
 ### Built with
 
