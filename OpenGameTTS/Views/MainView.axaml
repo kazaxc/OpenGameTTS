@@ -18,7 +18,7 @@
 
       <!-- Text input and settings menu button -->
       <TextBox Grid.Column="0" Grid.Row="0" Name="SpeechInputTextBox" Watermark="Enter your message..." Margin="0,0,10,0" HorizontalAlignment="Stretch"/>
-      <Button Grid.Column="1" Grid.Row="0" FontSize="20" Content="V"/>
+      <Button Grid.Column="1" Grid.Row="0" FontSize="20" FontFamily="{DynamicResource PhosphorFill}" Content="{Binding CollapseButtonSymbol}" Command="{Binding ToggleCollapseCommand}"/>
       <!-- Settings -->
       <StackPanel Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Stretch" Margin="0,10,0,0">
           <!-- Header -->
