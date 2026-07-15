@@ -1,6 +1,6 @@
 <br/>
 <div align="center">
-    <img src="logo.svg" alt="Logo" width="128" height="128">
+    <img src="assets/logo-white.svg" alt="Logo" width="128" height="128">
 </div>
 
 <h3 align="center">Open Game TTS</h3>
@@ -16,7 +16,7 @@
 Open Game TTS is an overlay that you run on your games that allows you to input text that you wish to be TTS, the output is played back to you and pushed through [VB-Audio Virtual Cable](https://vb-audio.com/Cable/) for the ability to talk through programs such as discord or used in games with voice proximity. The project is heavily inspired by Sea Of Thieves and R.E.P.O. which include a native TTS feature for their in-game chats, the idea is to make proximity chat games more accessible to those who do not use a microphone. 
 
 <div align="center">
-    <img src="Avalonia-Preview.png" alt="Preview of the Avalonia port's design">
+    <img src="assets/Avalonia-Preview.png" alt="Preview of the Avalonia port's design">
 </div>
 
 Uses Microsoft speech synthesis - Any language packs or SAPI5 voices you have installed on windows are available for you to use. If you want additional voices follow [this](https://support.microsoft.com/en-gb/topic/download-languages-and-voices-for-immersive-reader-read-mode-and-read-aloud-4c83a8d8-7486-42f7-8e46-2b0fdf753130) guide by Microsoft.
