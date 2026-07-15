@@ -10,17 +10,27 @@ namespace OpenGameTTS.Views;
 
 public partial class MainView : UserControl
 {
+    private MainViewModel? _vm;
+
     public MainView()
     {
         InitializeComponent();
         DataContextChanged += OnDataContextChanged;
     }
 
+    private void VmOnFocusInputRequested(object? sender, EventArgs e) => SpeechInputTextBox.Focus();
+
     private void OnDataContextChanged(object? sender, EventArgs e)
     {
-        if (DataContext is MainViewModel vm)
+        if (_vm is not null)
         {
-            vm.FocusInputRequested += (_, _) => SpeechInputTextBox.Focus();
+            _vm.FocusInputRequested -= VmOnFocusInputRequested;
+        }
+
+        _vm = DataContext as MainViewModel;
+        if (_vm is not null)
+        {
+            _vm.FocusInputRequested += VmOnFocusInputRequested;
         }
     }
 
