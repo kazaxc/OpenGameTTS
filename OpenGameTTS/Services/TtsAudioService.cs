@@ -48,12 +48,19 @@ public sealed class TtsAudioService : IDisposable
         _synthesizer.Speak(text);
 
         var audioData = memoryStream.ToArray();
-        if (audioData.Length <= 44) return;
 
         using var audioFileReader = new WaveFileReader(new MemoryStream(audioData));
 
-        var pcm = new byte[audioData.Length - 44];
-        Array.Copy(audioData, 44, pcm, 0, pcm.Length);
+        using var pcmStream = new MemoryStream();
+        var buffer = new byte[16 * 1024];
+        int bytesRead;
+        while ((bytesRead = audioFileReader.Read(buffer, 0, buffer.Length)) > 0)
+        {
+            pcmStream.Write(buffer, 0, bytesRead);
+        }
+
+        var pcm = pcmStream.ToArray();
+        if (pcm.Length == 0) return;
 
         var provider = new BufferedWaveProvider(audioFileReader.WaveFormat);
         provider.AddSamples(pcm, 0, pcm.Length);
