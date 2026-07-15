@@ -146,7 +146,7 @@ public sealed class GlobalHotKeyService : IDisposable
 
         if (_hwnd == IntPtr.Zero) return;
 
-        while (GetMessageW(out var msg, IntPtr.Zero, 0, 0))
+        while (TryGetMessage(out var msg))
         {
             TranslateMessage(ref msg);
             DispatchMessageW(ref msg);
