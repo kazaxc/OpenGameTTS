@@ -80,8 +80,9 @@ public sealed class GlobalHotKeyService : IDisposable
     private static extern void PostQuitMessage(int nExitCode);
 
     [DllImport("user32.dll")]
-    private static extern bool GetMessageW(out Msg lpMsg, IntPtr hWnd, uint wMsgFilterMin, uint wMsgFilterMax);
+    private static extern int GetMessageW(out Msg lpMsg, IntPtr hWnd, uint wMsgFilterMin, uint wMsgFilterMax);
 
+    private static bool TryGetMessage(out Msg msg) => GetMessageW(out msg, IntPtr.Zero, 0, 0) > 0;
     [DllImport("user32.dll")]
     private static extern bool TranslateMessage(ref Msg lpMsg);
 
