@@ -13,27 +13,28 @@
   </Design.DataContext>
 
   <!-- Application Layout -->
-  <Border Padding ="10">
+  <Border Padding="10" Background="Transparent" PointerPressed="Border_OnPointerPressed">
       <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, *">
 
       <!-- Text input and settings menu button -->
-      <TextBox Grid.Column="0" Grid.Row="0" Name="SpeechInputTextBox" Watermark="Enter your message..." Margin="0,0,10,0" HorizontalAlignment="Stretch"/>
+      <TextBox Grid.Column="0" Grid.Row="0" Name="SpeechInputTextBox" PlaceholderText="Enter your message..." Margin="0,0,10,0" HorizontalAlignment="Stretch"
+               Text="{Binding InputText}" KeyDown="SpeechInputTextBox_OnKeyDown"/>
       <Button Grid.Column="1" Grid.Row="0" FontSize="20" FontFamily="{DynamicResource PhosphorFill}" Content="{Binding CollapseButtonSymbol}" Command="{Binding ToggleCollapseCommand}"/>
       <!-- Settings -->
       <StackPanel Grid.ColumnSpan="2" Grid.Column="0" Grid.Row="1" Orientation="Vertical" HorizontalAlignment="Stretch" Margin="0,10,0,0">
           <!-- Header -->
           <Label Content="Settings" FontWeight="Bold" FontSize="20"/>
-          
+
           <!-- Voice Selection -->
           <Label Content="Voice" FontWeight="SemiBold" FontSize="16"/>
-          <ListBox SelectionMode="Single,AlwaysSelected" FontSize="14" Height="115"/>
+          <ListBox SelectionMode="Single,AlwaysSelected" ItemsSource="{Binding AvailableVoices}" SelectedItem="{Binding SelectedVoice}" FontSize="14" Height="115"/>
 
           <!-- Volume Slider -->
           <Label Content="Volume" FontWeight="SemiBold" FontSize="16"/>
-          <Slider Minimum="0" Maximum="100" Value="100" />
+          <Slider Minimum="0" Maximum="100" Value="{Binding Volume}" />
 
           <!-- Exit Button -->
-          <Button Content="QUIT" HorizontalAlignment="Center"/>
+          <Button Content="QUIT" HorizontalAlignment="Center" Command="{Binding ExitAppCommand}"/>
       </StackPanel>
     </Grid>
   </Border>

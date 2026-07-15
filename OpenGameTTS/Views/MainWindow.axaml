@@ -12,7 +12,7 @@
         Width="{Binding WindowWidth}"
         Height="{Binding WindowHeight}"
         CanResize="False"
-        SystemDecorations="None"
+        WindowDecorations="None"
         Background="Transparent"
         TransparencyLevelHint="AcrylicBlur"
         ExtendClientAreaToDecorationsHint="True"
